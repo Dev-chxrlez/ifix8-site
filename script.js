@@ -15,8 +15,10 @@
       "hero.lead": "Expert repairs for iPhone, Samsung, Honor, Vivo, Huawei, Infinix, Oppo and more. Free check-up. 1-week warranty.",
       "hero.book": "Book a repair",
       "hero.call": "Call",
-      "hero.card1.title": "Repair complete",
-      "hero.card1.sub": "Ready for pickup",
+      "hero.card1.title": "1-week warranty",
+      "hero.card1.sub": "On every repair",
+      "hero.notif.time": "now",
+      "hero.notif.text": "Your phone is fixed and ready for pickup.",
       "hero.card2.title": "Free check-up",
       "hero.card2.sub": "Know the price first",
 
@@ -30,7 +32,9 @@
       "hl.4.text": "Local, friendly and easy to reach.",
 
       "svc.eyebrow": "Services",
-      "svc.title": "Whatever broke, we fix it.",
+      "svc.title": 'Whatever broke.<br>We <span class="dim">fix it.</span>',
+      "svc.lead": "From cracked screens to tired batteries, we find the problem for free and fix it right.",
+      "svc.bookThis": "Book this repair",
       "svc.screen.title": "Screen replacement",
       "svc.screen.text": "Cracked glass, dead pixels or unresponsive touch.",
       "svc.battery.title": "Battery replacement",
@@ -51,6 +55,7 @@
       "brands.eyebrow": "Brands",
       "brands.title": "All the brands you use.",
       "brands.more": "and more",
+      "brands.note": "IFix8 is an independent repair shop. Brand names and logos belong to their owners.",
 
       "how.eyebrow": "How it works",
       "how.title": "Simple from start to finish.",
@@ -117,8 +122,10 @@
       "hero.lead": "Eksperto sa pag-ayos ng iPhone, Samsung, Honor, Vivo, Huawei, Infinix, Oppo at iba pa. Libreng check-up. 1-linggong warranty.",
       "hero.book": "Mag-book ng repair",
       "hero.call": "Tumawag",
-      "hero.card1.title": "Tapos na ang repair",
-      "hero.card1.sub": "Pwede nang kunin",
+      "hero.card1.title": "1-linggong warranty",
+      "hero.card1.sub": "Sa bawat repair",
+      "hero.notif.time": "ngayon",
+      "hero.notif.text": "Ayos na ang phone mo. Pwede mo nang kunin.",
       "hero.card2.title": "Libreng check-up",
       "hero.card2.sub": "Alamin muna ang presyo",
 
@@ -132,7 +139,9 @@
       "hl.4.text": "Malapit, magiliw at madaling puntahan.",
 
       "svc.eyebrow": "Serbisyo",
-      "svc.title": "Anuman ang sira, aayusin namin.",
+      "svc.title": 'Anuman ang sira.<br><span class="dim">Aayusin namin.</span>',
+      "svc.lead": "Mula sa basag na screen hanggang sa mahinang baterya, libre naming hahanapin ang sira at aayusin nang tama.",
+      "svc.bookThis": "I-book ang repair na ito",
       "svc.screen.title": "Palit screen",
       "svc.screen.text": "Basag, may dead pixels o hindi gumagana ang touch.",
       "svc.battery.title": "Palit baterya",
@@ -153,6 +162,7 @@
       "brands.eyebrow": "Mga Brand",
       "brands.title": "Lahat ng brand na gamit mo.",
       "brands.more": "at iba pa",
+      "brands.note": "Ang IFix8 ay isang independent na repair shop. Ang mga brand name at logo ay pag-aari ng kani-kanilang may-ari.",
 
       "how.eyebrow": "Paano",
       "how.title": "Madali mula umpisa hanggang dulo.",
@@ -231,12 +241,35 @@
       var v = t(el.getAttribute("data-i18n-placeholder"));
       if (v) el.setAttribute("placeholder", v);
     });
+    document.querySelectorAll("[data-i18n-aria]").forEach(function (el) {
+      var v = t(el.getAttribute("data-i18n-aria"));
+      if (v) el.setAttribute("aria-label", v);
+    });
     document.querySelectorAll(".lang button").forEach(function (b) {
       b.setAttribute("aria-pressed", String(b.getAttribute("data-lang") === lang));
     });
+    renderScreenDate();
 
     try { localStorage.setItem("ifix8-lang", lang); } catch (e) {}
   }
+
+  // Lock screen clock: iOS style (12-hour, no AM/PM), refreshed every second
+  function renderScreenDate() {
+    var now = new Date();
+    var dateEl = document.getElementById("screen-date");
+    var timeEl = document.getElementById("screen-time");
+    if (timeEl) {
+      var h = now.getHours() % 12 || 12;
+      timeEl.textContent = h + ":" + String(now.getMinutes()).padStart(2, "0");
+    }
+    if (dateEl) {
+      try {
+        dateEl.textContent = now.toLocaleDateString(current === "tl" ? "fil-PH" : "en-US", { weekday: "long", month: "long", day: "numeric" });
+      } catch (e) {}
+    }
+  }
+  renderScreenDate();
+  setInterval(renderScreenDate, 1000);
 
   document.querySelectorAll(".lang button").forEach(function (b) {
     b.addEventListener("click", function () { setLang(b.getAttribute("data-lang")); });
@@ -266,6 +299,14 @@
   var form = document.getElementById("booking-form");
   var status = document.getElementById("form-status");
   var dateInput = document.getElementById("f-date");
+
+  // Service card arrows pre-select the problem in the booking form
+  var issueSelect = document.getElementById("f-issue");
+  document.querySelectorAll("[data-issue]").forEach(function (a) {
+    a.addEventListener("click", function () {
+      if (issueSelect) issueSelect.value = a.getAttribute("data-issue");
+    });
+  });
 
   if (dateInput) {
     var d = new Date();
