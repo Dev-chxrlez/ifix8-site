@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=3">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -157,22 +157,22 @@
         <div class="svc-grid">
 
           <!-- Screen -->
-          <article class="svc-card photo dark reveal">
+          <article class="svc-card dark reveal">
             <div class="svc-text">
               <h3 data-i18n="svc.screen.title">Screen replacement</h3>
               <p data-i18n="svc.screen.text">Cracked glass, dead pixels or unresponsive touch.</p>
             </div>
-            <img class="svc-photo" src="images/broken-screen.jpg" alt="" loading="lazy" decoding="async">
+            <div class="svc-visual" aria-hidden="true"><img class="svc-render" src="images/render-screen.svg?v=3" alt="" decoding="async"></div>
             <a class="svc-arrow" href="#book" data-issue="Screen" aria-label="Book this repair" data-i18n-aria="svc.bookThis"><svg viewBox="0 0 24 24"><path d="M8 16L16 8M9.5 8H16v6.5"/></svg></a>
           </article>
 
           <!-- Camera -->
-          <article class="svc-card photo light reveal">
+          <article class="svc-card light reveal">
             <div class="svc-text">
               <h3 data-i18n="svc.camera.title">Camera repair</h3>
               <p data-i18n="svc.camera.text">Blurry photos, cracked lens or black camera.</p>
             </div>
-            <img class="svc-photo" src="images/broken-camera.jpg" alt="" loading="lazy" decoding="async">
+            <div class="svc-visual" aria-hidden="true"><img class="svc-render" src="images/render-camera.svg?v=3" alt="" decoding="async"></div>
             <a class="svc-arrow" href="#book" data-issue="Camera" aria-label="Book this repair" data-i18n-aria="svc.bookThis"><svg viewBox="0 0 24 24"><path d="M8 16L16 8M9.5 8H16v6.5"/></svg></a>
           </article>
 
@@ -324,12 +324,12 @@
           </article>
 
           <!-- Back glass -->
-          <article class="svc-card photo dark wide reveal">
+          <article class="svc-card dark wide reveal">
             <div class="svc-text">
               <h3 data-i18n="svc.back.title">Back glass &amp; housing</h3>
               <p data-i18n="svc.back.text">Cracked back or damaged frame.</p>
             </div>
-            <img class="svc-photo" src="images/broken-back.jpg" alt="" loading="lazy" decoding="async">
+            <div class="svc-visual" aria-hidden="true"><img class="svc-render" src="images/render-back.svg?v=3" alt="" decoding="async"></div>
             <a class="svc-arrow" href="#book" data-issue="Back glass/housing" aria-label="Book this repair" data-i18n-aria="svc.bookThis"><svg viewBox="0 0 24 24"><path d="M8 16L16 8M9.5 8H16v6.5"/></svg></a>
           </article>
 
@@ -605,6 +605,6 @@
     <a href="#book" class="btn" data-i18n="hero.book">Book a repair</a>
   </div>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=3"></script>
 </body>
 </html>

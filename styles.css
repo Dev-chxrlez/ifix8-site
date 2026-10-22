@@ -264,16 +264,8 @@ h3 { font-size: 21px; line-height: 1.2; letter-spacing: -0.025em; font-weight: 6
 .svc-card:hover .svc-visual { transform: scale(1.03); }
 .visual-center { display: flex; align-items: center; justify-content: center; }
 
-/* Photo cards (screen, camera, back glass) */
-.svc-photo { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s var(--ease); }
-.svc-card:hover .svc-photo { transform: scale(1.04); }
-.svc-card.photo::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; }
-.svc-card.photo.dark::after { background: linear-gradient(180deg, rgba(0, 0, 0, 0.82) 0%, rgba(0, 0, 0, 0.35) 38%, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.35) 100%); }
-.svc-card.photo.light::after { background: linear-gradient(180deg, rgba(255, 255, 255, 0.92) 0%, rgba(255, 255, 255, 0.5) 30%, rgba(255, 255, 255, 0) 55%); }
-.svc-card.photo .svc-text p { color: rgba(255, 255, 255, 0.78); }
-.svc-card.photo.light .svc-text p { color: #424245; }
-.photo img[src$="broken-camera.jpg"] { object-position: 47% 50%; }
-.photo img[src$="broken-back.jpg"] { object-position: 50% 22%; }
+/* Rendered phones (screen, camera, back glass) */
+.svc-render { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 100%; }
 .drops { position: absolute; inset: 0; width: 100%; height: 100%; }
 
 .svc-arrow {
@@ -368,9 +360,6 @@ h3 { font-size: 21px; line-height: 1.2; letter-spacing: -0.025em; font-weight: 6
 @media (min-width: 1001px) {
   .svc-card.wide { grid-column: span 3; height: 380px; }
   .svc-card.wide .svc-visual { top: 0; left: 44%; height: auto; }
-  .svc-card.wide.photo.dark::after { background: linear-gradient(90deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.5) 35%, rgba(0, 0, 0, 0) 65%); }
-  .svc-card.wide .svc-photo { left: 30%; width: 70%; -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 30%); mask-image: linear-gradient(90deg, transparent 0%, #000 30%); }
-  .svc-card.wide.photo { background: #000; }
   .svc-card.wide .mini-phone { bottom: -110px; margin-left: -115px; }
 }
 
