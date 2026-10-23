@@ -120,7 +120,7 @@
       "chat.q4": "My phone got wet",
       "chat.placeholder": "Ask a question…",
       "chat.send": "Send",
-      "chat.note": "AI answers can be wrong. Call us to confirm.",
+      "chat.note": "AI answers can be wrong. Please don’t share personal details.",
       "chat.err": "Sorry, I can’t answer right now. Please call us at 0907 102 6027.",
       "chat.busy": "Too many messages right now. Please wait a few minutes or call 0907 102 6027."
     },
@@ -242,7 +242,7 @@
       "chat.q4": "Nabasa ang phone ko",
       "chat.placeholder": "Magtanong…",
       "chat.send": "Ipadala",
-      "chat.note": "Maaaring mali ang sagot ng AI. Tumawag para makasiguro.",
+      "chat.note": "Maaaring mali ang sagot ng AI. Huwag magbahagi ng personal na detalye.",
       "chat.err": "Pasensya, hindi ako makasagot ngayon. Tumawag sa 0907 102 6027.",
       "chat.busy": "Masyadong maraming mensahe ngayon. Maghintay ng ilang minuto o tumawag sa 0907 102 6027."
     }

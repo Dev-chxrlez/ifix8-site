@@ -11,7 +11,7 @@ Plain HTML, CSS and JavaScript, plus one Netlify Function for the AI chat.
 - `public/script.js` — English / Tagalog toggle, scroll animations, form submit, chat widget
 - `public/favicon.svg` — logo mark
 - `public/images/render-*.svg` — phone renders in the services section (original vector art)
-- `netlify/functions/chat.mjs` — AI support chat backend (`/api/chat`), calls Claude
+- `netlify/functions/chat.mjs` — AI support chat backend (`/api/chat`), calls Google Gemini
 - `netlify.toml` — Netlify settings (publishes `public/`)
 
 ## Run locally
@@ -26,14 +26,14 @@ Booking requests show up in the Netlify dashboard under **Forms → booking**.
 
 ## AI chat setup
 
-The chat needs an Anthropic API key:
+The chat uses the free tier of the Google Gemini API (no credit card needed):
 
-1. Create a key at https://platform.claude.com (API keys).
+1. Create a key at https://aistudio.google.com/apikey.
 2. In Netlify: **Project configuration → Environment variables → Add a variable**.
-   Key: `ANTHROPIC_API_KEY`, value: your key. Mark it as secret.
+   Key: `GEMINI_API_KEY`, value: your key. Mark it as secret.
 3. Redeploy (**Deploys → Trigger deploy**).
 
-Without the key the chat still opens but replies with the shop's phone number.
+Without the key the chat still opens but replies with the shop's phone number. On the free tier Google may use chat messages to improve its products, and daily limits apply; when both free models hit their limit, the chat also falls back to the phone number.
 
 The bot's knowledge (hours, services, warranty, rules) is the `SYSTEM_PROMPT` in `netlify/functions/chat.mjs`. Update it whenever business details change.
 
