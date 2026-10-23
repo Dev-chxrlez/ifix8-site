@@ -107,7 +107,22 @@
       "visit.title": "Come visit us.",
       "visit.address": "Address",
       "visit.hours": "Hours",
-      "visit.phone": "Phone"
+      "visit.phone": "Phone",
+
+      "chat.open": "Chat with us",
+      "chat.close": "Close chat",
+      "chat.title": "IFix8 Assistant",
+      "chat.sub": "AI assistant · replies instantly",
+      "chat.hello": "Hi! I’m the IFix8 assistant. Ask me about repairs, hours or booking.",
+      "chat.q1": "How much is a screen repair?",
+      "chat.q2": "What are your hours?",
+      "chat.q3": "Where are you located?",
+      "chat.q4": "My phone got wet",
+      "chat.placeholder": "Ask a question…",
+      "chat.send": "Send",
+      "chat.note": "AI answers can be wrong. Call us to confirm.",
+      "chat.err": "Sorry, I can’t answer right now. Please call us at 0907 102 6027.",
+      "chat.busy": "Too many messages right now. Please wait a few minutes or call 0907 102 6027."
     },
 
     tl: {
@@ -214,7 +229,22 @@
       "visit.title": "Bisitahin kami.",
       "visit.address": "Address",
       "visit.hours": "Oras",
-      "visit.phone": "Telepono"
+      "visit.phone": "Telepono",
+
+      "chat.open": "Makipag-chat sa amin",
+      "chat.close": "Isara ang chat",
+      "chat.title": "IFix8 Assistant",
+      "chat.sub": "AI assistant · sumasagot agad",
+      "chat.hello": "Hi! Ako ang IFix8 assistant. Magtanong tungkol sa repair, oras o booking.",
+      "chat.q1": "Magkano ang palit screen?",
+      "chat.q2": "Anong oras kayo bukas?",
+      "chat.q3": "Saan kayo matatagpuan?",
+      "chat.q4": "Nabasa ang phone ko",
+      "chat.placeholder": "Magtanong…",
+      "chat.send": "Ipadala",
+      "chat.note": "Maaaring mali ang sagot ng AI. Tumawag para makasiguro.",
+      "chat.err": "Pasensya, hindi ako makasagot ngayon. Tumawag sa 0907 102 6027.",
+      "chat.busy": "Masyadong maraming mensahe ngayon. Maghintay ng ilang minuto o tumawag sa 0907 102 6027."
     }
   };
 
@@ -341,6 +371,92 @@
           btn.disabled = false;
           btn.textContent = t("form.submit");
         });
+    });
+  }
+
+  // ---------- AI support chat (calls /api/chat, a Netlify Function) ----------
+  var fab = document.getElementById("chat-fab");
+  var panel = document.getElementById("chat-panel");
+  var chatLog = document.getElementById("chat-log");
+  var chatForm = document.getElementById("chat-form");
+  var chatInput = document.getElementById("chat-input");
+  var chips = document.getElementById("chat-chips");
+  var chatHistory = [];
+  var waiting = false;
+
+  function setChat(open) {
+    panel.hidden = !open;
+    fab.setAttribute("aria-expanded", String(open));
+    document.body.classList.toggle("chat-open", open);
+    if (open) chatInput.focus();
+  }
+
+  function addMsg(text, who) {
+    var el = document.createElement("div");
+    el.className = "msg " + who;
+    el.textContent = text;
+    chatLog.appendChild(el);
+    chatLog.scrollTop = chatLog.scrollHeight;
+    return el;
+  }
+
+  function send(text) {
+    text = text.trim();
+    if (!text || waiting) return;
+    waiting = true;
+    chips.hidden = true;
+    chatInput.value = "";
+    addMsg(text, "user");
+    chatHistory.push({ role: "user", content: text });
+
+    var typing = document.createElement("div");
+    typing.className = "msg bot typing";
+    typing.innerHTML = "<span></span><span></span><span></span>";
+    chatLog.appendChild(typing);
+    chatLog.scrollTop = chatLog.scrollHeight;
+
+    fetch("/api/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ messages: chatHistory })
+    })
+      .then(function (res) {
+        return res.json().catch(function () { return {}; }).then(function (data) {
+          return { status: res.status, data: data };
+        });
+      })
+      .then(function (r) {
+        typing.remove();
+        if (r.status === 200 && r.data.reply) {
+          addMsg(r.data.reply, "bot");
+          chatHistory.push({ role: "assistant", content: r.data.reply });
+        } else {
+          chatHistory.pop(); // drop the unanswered question so the next try stays valid
+          addMsg(t(r.status === 429 ? "chat.busy" : "chat.err"), "bot error");
+        }
+      })
+      .catch(function () {
+        typing.remove();
+        chatHistory.pop();
+        addMsg(t("chat.err"), "bot error");
+      })
+      .then(function () {
+        waiting = false;
+      });
+  }
+
+  if (fab && panel) {
+    fab.addEventListener("click", function () { setChat(panel.hidden); });
+    document.getElementById("chat-close").addEventListener("click", function () { setChat(false); fab.focus(); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && !panel.hidden) { setChat(false); fab.focus(); }
+    });
+    chatForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      send(chatInput.value);
+    });
+    chips.querySelectorAll("button").forEach(function (b) {
+      b.addEventListener("click", function () { send(b.textContent); });
     });
   }
 

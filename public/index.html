@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=4">
+  <link rel="stylesheet" href="styles.css?v=5">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -605,6 +605,36 @@
     <a href="#book" class="btn" data-i18n="hero.book">Book a repair</a>
   </div>
 
-  <script src="script.js?v=3"></script>
+  <!-- AI support chat -->
+  <button type="button" class="chat-fab" id="chat-fab" aria-label="Chat with us" data-i18n-aria="chat.open" aria-expanded="false" aria-controls="chat-panel">
+    <svg class="chat-fab-open" viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 016.5 3h11A2.5 2.5 0 0120 5.5v8a2.5 2.5 0 01-2.5 2.5H10l-4.2 3.6c-.5.4-1.3.1-1.3-.6V16A2.5 2.5 0 014 13.5z"/></svg>
+    <svg class="chat-fab-close" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <section class="chat-panel" id="chat-panel" role="dialog" aria-labelledby="chat-title" hidden>
+    <header class="chat-head">
+      <img src="favicon.svg" alt="" width="34" height="34">
+      <div>
+        <strong id="chat-title" data-i18n="chat.title">IFix8 Assistant</strong>
+        <small><span class="chat-dot"></span><span data-i18n="chat.sub">AI assistant · replies instantly</span></small>
+      </div>
+      <button type="button" class="chat-close" id="chat-close" aria-label="Close chat" data-i18n-aria="chat.close"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </header>
+    <div class="chat-log" id="chat-log" aria-live="polite">
+      <div class="msg bot" data-i18n="chat.hello">Hi! I’m the IFix8 assistant. Ask me about repairs, hours or booking.</div>
+    </div>
+    <div class="chat-chips" id="chat-chips">
+      <button type="button" data-i18n="chat.q1">How much is a screen repair?</button>
+      <button type="button" data-i18n="chat.q2">What are your hours?</button>
+      <button type="button" data-i18n="chat.q3">Where are you located?</button>
+      <button type="button" data-i18n="chat.q4">My phone got wet</button>
+    </div>
+    <form class="chat-form" id="chat-form">
+      <input id="chat-input" type="text" maxlength="1000" autocomplete="off" aria-label="Message" data-i18n-aria="chat.placeholder" data-i18n-placeholder="chat.placeholder" placeholder="Ask a question…">
+      <button type="submit" aria-label="Send" data-i18n-aria="chat.send"><svg viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></svg></button>
+    </form>
+    <p class="chat-note" data-i18n="chat.note">AI answers can be wrong. Call us to confirm.</p>
+  </section>
+
+  <script src="script.js?v=4"></script>
 </body>
 </html>

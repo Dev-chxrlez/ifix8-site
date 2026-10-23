@@ -1,0 +1,8 @@
+{
+  "name": "ifix8-site",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.2.0"
+  }
+}
