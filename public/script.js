@@ -55,7 +55,6 @@
       "brands.eyebrow": "Brands",
       "brands.title": "All the brands you use.",
       "brands.more": "and more",
-      "brands.note": "IFix8 is an independent repair shop. Brand names and logos belong to their owners.",
 
       "how.eyebrow": "How it works",
       "how.title": "Simple from start to finish.",
@@ -177,7 +176,6 @@
       "brands.eyebrow": "Mga Brand",
       "brands.title": "Lahat ng brand na gamit mo.",
       "brands.more": "at iba pa",
-      "brands.note": "Ang IFix8 ay isang independent na repair shop. Ang mga brand name at logo ay pag-aari ng kani-kanilang may-ari.",
 
       "how.eyebrow": "Paano",
       "how.title": "Madali mula umpisa hanggang dulo.",
