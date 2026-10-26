@@ -589,7 +589,7 @@ span.logo-word { height: auto; font-size: 28px; font-weight: 700; letter-spacing
 }
 .chat-chips button:hover { background: var(--bg-alt); }
 
-.chat-form { display: flex; gap: 8px; padding: 10px 12px 6px; }
+.chat-form { display: flex; gap: 8px; padding: 10px 12px 14px; }
 .chat-form input {
   flex: 1;
   min-width: 0;
@@ -606,7 +606,6 @@ span.logo-word { height: auto; font-size: 28px; font-weight: 700; letter-spacing
 .chat-form button { width: 42px; height: 42px; flex: none; display: grid; place-items: center; border: 0; border-radius: 50%; background: var(--text); cursor: pointer; }
 .chat-form button[disabled] { opacity: 0.4; cursor: default; }
 .chat-form button svg { width: 20px; height: 20px; fill: none; stroke: #fff; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-.chat-note { padding: 0 16px 12px; font-size: 11px; color: var(--muted); text-align: center; }
 
 /* ---------- Reveal animation ---------- */
 .js .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s var(--ease), transform 0.9s var(--ease); }
