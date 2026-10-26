@@ -266,6 +266,24 @@ h3 { font-size: 21px; line-height: 1.2; letter-spacing: -0.025em; font-weight: 6
 
 /* Rendered phones (screen, camera, back glass) */
 .svc-render { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 100%; }
+
+/* Skeleton: phone-shaped shimmer shown until the render loads */
+.js .skeleton:not(.loaded)::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -24px;
+  width: 46%;
+  max-width: 200px;
+  height: 92%;
+  transform: translateX(-50%);
+  border-radius: 36px;
+  background: linear-gradient(100deg, rgba(128, 128, 128, 0.14) 30%, rgba(128, 128, 128, 0.3) 50%, rgba(128, 128, 128, 0.14) 70%) 0 0 / 300% 100%;
+  animation: skeleton 1.4s ease-in-out infinite;
+}
+@keyframes skeleton { from { background-position: 100% 0; } to { background-position: 0 0; } }
+.js .svc-render { opacity: 0; transition: opacity 0.5s var(--ease); }
+.js .loaded .svc-render { opacity: 1; }
 .drops { position: absolute; inset: 0; width: 100%; height: 100%; }
 
 .svc-arrow {
@@ -614,7 +632,7 @@ span.logo-word { height: auto; font-size: 28px; font-weight: 700; letter-spacing
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .js .reveal { opacity: 1; transform: none; transition: none; }
-  .float-card, .spinner, .progress span, .chat-panel:not([hidden]), .typing span { animation: none; }
+  .float-card, .spinner, .progress span, .chat-panel:not([hidden]), .typing span, .skeleton::before { animation: none; }
   .svc-card, .svc-visual, .btn { transition: none; }
 }
 

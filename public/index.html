@@ -13,7 +13,16 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=7">
+  <link rel="stylesheet" href="styles.css?v=8">
+  <script>
+    // Runs before the body so service images show a skeleton until they load
+    document.documentElement.classList.add("js");
+    document.addEventListener("load", markLoaded, true);
+    document.addEventListener("error", markLoaded, true);
+    function markLoaded(e) {
+      if (e.target.classList && e.target.classList.contains("svc-render")) e.target.parentNode.classList.add("loaded");
+    }
+  </script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -162,7 +171,7 @@
               <h3 data-i18n="svc.screen.title">Screen replacement</h3>
               <p data-i18n="svc.screen.text">Cracked glass, dead pixels or unresponsive touch.</p>
             </div>
-            <div class="svc-visual" aria-hidden="true"><img class="svc-render" src="images/render-screen.svg?v=3" alt="" decoding="async"></div>
+            <div class="svc-visual skeleton" aria-hidden="true"><img class="svc-render" src="images/render-screen.svg?v=3" alt="" decoding="async"></div>
             <a class="svc-arrow" href="#book" data-issue="Screen" aria-label="Book this repair" data-i18n-aria="svc.bookThis"><svg viewBox="0 0 24 24"><path d="M8 16L16 8M9.5 8H16v6.5"/></svg></a>
           </article>
 
@@ -172,7 +181,7 @@
               <h3 data-i18n="svc.camera.title">Camera repair</h3>
               <p data-i18n="svc.camera.text">Blurry photos, cracked lens or black camera.</p>
             </div>
-            <div class="svc-visual" aria-hidden="true"><img class="svc-render" src="images/render-camera.svg?v=3" alt="" decoding="async"></div>
+            <div class="svc-visual skeleton" aria-hidden="true"><img class="svc-render" src="images/render-camera.svg?v=3" alt="" decoding="async"></div>
             <a class="svc-arrow" href="#book" data-issue="Camera" aria-label="Book this repair" data-i18n-aria="svc.bookThis"><svg viewBox="0 0 24 24"><path d="M8 16L16 8M9.5 8H16v6.5"/></svg></a>
           </article>
 
@@ -329,7 +338,7 @@
               <h3 data-i18n="svc.back.title">Back glass &amp; housing</h3>
               <p data-i18n="svc.back.text">Cracked back or damaged frame.</p>
             </div>
-            <div class="svc-visual" aria-hidden="true"><img class="svc-render" src="images/render-back.svg?v=3" alt="" decoding="async"></div>
+            <div class="svc-visual skeleton" aria-hidden="true"><img class="svc-render" src="images/render-back.svg?v=3" alt="" decoding="async"></div>
             <a class="svc-arrow" href="#book" data-issue="Back glass/housing" aria-label="Book this repair" data-i18n-aria="svc.bookThis"><svg viewBox="0 0 24 24"><path d="M8 16L16 8M9.5 8H16v6.5"/></svg></a>
           </article>
 
@@ -635,6 +644,6 @@
     </form>
   </section>
 
-  <script src="script.js?v=7"></script>
+  <script src="script.js?v=8"></script>
 </body>
 </html>

@@ -1,6 +1,11 @@
 (function () {
   document.documentElement.classList.add("js");
 
+  // Images that finished loading before the listener in <head> saw them
+  document.querySelectorAll(".svc-render").forEach(function (img) {
+    if (img.complete) img.parentNode.classList.add("loaded");
+  });
+
   // ---------- Translations ----------
   var T = {
     en: {
