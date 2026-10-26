@@ -112,16 +112,21 @@
       "chat.close": "Close chat",
       "chat.title": "IFix8 Assistant",
       "chat.sub": "AI assistant · replies instantly",
-      "chat.hello": "Hi! I’m the IFix8 assistant. Ask me about repairs, hours or booking.",
+      "chat.hello": "Hi! I’m the IFix8 assistant. Ask me about repairs or hours, or book a repair right here.",
       "chat.q1": "How much is a screen repair?",
       "chat.q2": "What are your hours?",
       "chat.q3": "Where are you located?",
       "chat.q4": "My phone got wet",
+      "chat.q5": "I want to book a repair",
       "chat.placeholder": "Ask a question…",
       "chat.send": "Send",
-      "chat.note": "AI answers can be wrong. Please don’t share personal details.",
+      "chat.note": "AI answers can be wrong. Only share your name and number if you’re booking.",
       "chat.err": "Sorry, I can’t answer right now. Please call us at 0907 102 6027.",
-      "chat.busy": "Too many messages right now. Please wait a few minutes or call 0907 102 6027."
+      "chat.busy": "Too many messages right now. Please wait a few minutes or call 0907 102 6027.",
+      "chat.bookTitle": "Your booking request",
+      "chat.bookHint": "Need to change something? Just tell me.",
+      "chat.bookSent": "Sent",
+      "chat.bookCheck": "That mobile number doesn’t look right. Could you send it again? (e.g. 0917 123 4567)"
     },
 
     tl: {
@@ -233,16 +238,21 @@
       "chat.close": "Isara ang chat",
       "chat.title": "IFix8 Assistant",
       "chat.sub": "AI assistant · sumasagot agad",
-      "chat.hello": "Hi! Ako ang IFix8 assistant. Magtanong tungkol sa repair, oras o booking.",
+      "chat.hello": "Hi! Ako ang IFix8 assistant. Magtanong tungkol sa repair o oras, o mag-book dito mismo.",
       "chat.q1": "Magkano ang palit screen?",
       "chat.q2": "Anong oras kayo bukas?",
       "chat.q3": "Saan kayo matatagpuan?",
       "chat.q4": "Nabasa ang phone ko",
+      "chat.q5": "Gusto kong mag-book ng repair",
       "chat.placeholder": "Magtanong…",
       "chat.send": "Ipadala",
-      "chat.note": "Maaaring mali ang sagot ng AI. Huwag magbahagi ng personal na detalye.",
+      "chat.note": "Maaaring mali ang sagot ng AI. Ibahagi lang ang pangalan at numero kung magbu-book.",
       "chat.err": "Pasensya, hindi ako makasagot ngayon. Tumawag sa 0907 102 6027.",
-      "chat.busy": "Masyadong maraming mensahe ngayon. Maghintay ng ilang minuto o tumawag sa 0907 102 6027."
+      "chat.busy": "Masyadong maraming mensahe ngayon. Maghintay ng ilang minuto o tumawag sa 0907 102 6027.",
+      "chat.bookTitle": "Ang iyong booking request",
+      "chat.bookHint": "May gustong baguhin? Sabihin mo lang.",
+      "chat.bookSent": "Naipadala na",
+      "chat.bookCheck": "Mukhang mali ang mobile number. Pakisend ulit? (hal. 0917 123 4567)"
     }
   };
 
@@ -398,6 +408,84 @@
     return el;
   }
 
+  // Bot replies are kept in the history; consecutive ones are merged into one turn
+  function pushBot(text) {
+    var last = chatHistory[chatHistory.length - 1];
+    if (last && last.role === "assistant") last.content += "\n" + text;
+    else chatHistory.push({ role: "assistant", content: text });
+  }
+
+  var ISSUE_KEYS = {
+    "Screen": "svc.screen.title", "Battery": "svc.battery.title", "Charging port": "svc.port.title",
+    "Water damage": "svc.water.title", "Camera": "svc.camera.title", "Speaker/mic": "svc.audio.title",
+    "Back glass/housing": "svc.back.title", "Software": "svc.software.title", "Not sure": "form.notSure"
+  };
+
+  // Booking summary from the assistant; nothing is sent until the customer presses the button
+  function addBookingCard(b) {
+    var card = document.createElement("div");
+    card.className = "msg bot booking-card";
+    var title = document.createElement("strong");
+    title.textContent = t("chat.bookTitle");
+    card.appendChild(title);
+
+    var dl = document.createElement("dl");
+    [
+      ["form.name", b.name],
+      ["form.phone", b.phone],
+      ["form.brand", b.brand === "Other" ? t("form.other") : b.brand],
+      ["form.model", b.model],
+      ["form.issue", t(ISSUE_KEYS[b.issue] || "form.notSure")],
+      ["form.date", b.date],
+      ["form.details", b.details]
+    ].forEach(function (row) {
+      if (!row[1]) return;
+      var dt = document.createElement("dt");
+      dt.textContent = t(row[0]).replace(/\s*\(.*\)$/, "");
+      var dd = document.createElement("dd");
+      dd.textContent = row[1];
+      dl.appendChild(dt);
+      dl.appendChild(dd);
+    });
+    card.appendChild(dl);
+
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "btn";
+    btn.textContent = t("form.submit");
+    card.appendChild(btn);
+    var hint = document.createElement("small");
+    hint.textContent = t("chat.bookHint");
+    card.appendChild(hint);
+
+    btn.addEventListener("click", function () {
+      btn.disabled = true;
+      btn.textContent = t("form.sending");
+      var data = new URLSearchParams({ "form-name": "booking", source: "chat" });
+      ["name", "phone", "brand", "model", "issue", "date", "details"].forEach(function (k) { data.append(k, b[k] || ""); });
+      fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: data.toString()
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error(res.status);
+          btn.textContent = t("chat.bookSent");
+          hint.remove();
+          addMsg(t("form.ok"), "bot");
+          pushBot("(The customer sent this booking request. The shop will contact them to confirm.)");
+        })
+        .catch(function () {
+          btn.disabled = false;
+          btn.textContent = t("form.submit");
+          addMsg(t("form.err"), "bot error");
+        });
+    });
+
+    chatLog.appendChild(card);
+    chatLog.scrollTop = chatLog.scrollHeight;
+  }
+
   function send(text) {
     text = text.trim();
     if (!text || waiting) return;
@@ -425,9 +513,19 @@
       })
       .then(function (r) {
         typing.remove();
-        if (r.status === 200 && r.data.reply) {
-          addMsg(r.data.reply, "bot");
-          chatHistory.push({ role: "assistant", content: r.data.reply });
+        var d = r.data;
+        if (r.status === 200 && (d.reply || d.booking || d.bookingInvalid)) {
+          if (d.reply) {
+            addMsg(d.reply, "bot");
+            pushBot(d.reply);
+          }
+          if (d.booking) {
+            addBookingCard(d.booking);
+            pushBot("(Booking summary shown to the customer with a Send button: " + JSON.stringify(d.booking) + ")");
+          } else if (d.bookingInvalid) {
+            addMsg(t("chat.bookCheck"), "bot");
+            pushBot(t("chat.bookCheck"));
+          }
         } else {
           chatHistory.pop(); // drop the unanswered question so the next try stays valid
           addMsg(t(r.status === 429 ? "chat.busy" : "chat.err"), "bot error");
