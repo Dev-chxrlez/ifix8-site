@@ -462,6 +462,16 @@ span.logo-word { height: auto; font-size: 28px; font-weight: 700; letter-spacing
 }
 .field textarea { resize: vertical; min-height: 110px; }
 .field input:focus, .field select:focus, .field textarea:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.08); }
+/* Star rating: inputs run 5 to 1 and row-reverse puts 1 on the left, so ~ fills the lower stars */
+.rating { border: 0; padding: 0; margin: 0; min-width: 0; align-items: center; }
+.rating legend { padding: 0; margin: 0 auto 6px; font-size: 14px; font-weight: 500; color: var(--muted); }
+.stars { display: flex; flex-direction: row-reverse; justify-content: center; gap: 2px; }
+.stars input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+.stars label { padding: 4px; cursor: pointer; }
+.stars svg { display: block; width: 40px; height: 40px; fill: var(--line); transition: fill 0.15s var(--ease); }
+.stars input:checked ~ label svg, .stars label:hover svg, .stars label:hover ~ label svg { fill: var(--accent); }
+.stars input:focus-visible + label { outline: 3px solid rgba(0, 0, 0, 0.3); outline-offset: 1px; border-radius: 8px; }
+
 .form-actions { display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top: 10px; }
 .form-actions .btn { width: 100%; max-width: 340px; }
 .btn[disabled] { opacity: 0.6; cursor: default; }

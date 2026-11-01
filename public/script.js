@@ -13,6 +13,7 @@
       "nav.how": "How it works",
       "nav.faq": "FAQ",
       "nav.contact": "Contact",
+      "nav.feedback": "Feedback",
       "nav.book": "Book",
 
       "hero.eyebrow": "Phone repair in Las Piñas",
@@ -127,6 +128,14 @@
       "chat.send": "Send",
       "chat.err": "Sorry, I can’t answer right now. Please call us at 0907 102 6027.",
       "chat.busy": "Too many messages right now. Please wait a few minutes or call 0907 102 6027.",
+      "fb.eyebrow": "Feedback",
+      "fb.title": "How did we do?",
+      "fb.sub": "Tell us about your repair. Your feedback helps us improve.",
+      "fb.rating": "Your rating",
+      "fb.name": "Name (optional)",
+      "fb.message": "Your feedback",
+      "fb.submit": "Send feedback",
+      "fb.ok": "Thank you! We got your feedback.",
       "chat.bookTitle": "Your booking request",
       "chat.bookHint": "Need to change something? Just tell me.",
       "chat.bookSent": "Sent",
@@ -138,6 +147,7 @@
       "nav.how": "Paano",
       "nav.faq": "FAQ",
       "nav.contact": "Kontak",
+      "nav.feedback": "Feedback",
       "nav.book": "Mag-book",
 
       "hero.eyebrow": "Phone repair sa Las Piñas",
@@ -252,6 +262,14 @@
       "chat.send": "Ipadala",
       "chat.err": "Pasensya, hindi ako makasagot ngayon. Tumawag sa 0907 102 6027.",
       "chat.busy": "Masyadong maraming mensahe ngayon. Maghintay ng ilang minuto o tumawag sa 0907 102 6027.",
+      "fb.eyebrow": "Feedback",
+      "fb.title": "Kumusta ang serbisyo namin?",
+      "fb.sub": "Ikuwento ang iyong repair. Makakatulong ang feedback mo para gumaling pa kami.",
+      "fb.rating": "Iyong rating",
+      "fb.name": "Pangalan (opsyonal)",
+      "fb.message": "Iyong feedback",
+      "fb.submit": "Ipadala ang feedback",
+      "fb.ok": "Salamat! Natanggap namin ang feedback mo.",
       "chat.bookTitle": "Ang iyong booking request",
       "chat.bookHint": "May gustong baguhin? Sabihin mo lang.",
       "chat.bookSent": "Naipadala na",
@@ -381,6 +399,40 @@
         .then(function () {
           btn.disabled = false;
           btn.textContent = t("form.submit");
+        });
+    });
+  }
+
+  // ---------- Feedback form (Netlify Forms) ----------
+  var fbForm = document.getElementById("feedback-form");
+  if (fbForm) {
+    var fbStatus = document.getElementById("feedback-status");
+    fbForm.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var btn = fbForm.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      btn.textContent = t("form.sending");
+      fbStatus.textContent = "";
+      fbStatus.className = "form-status";
+
+      fetch("/", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(new FormData(fbForm)).toString()
+      })
+        .then(function (res) {
+          if (!res.ok) throw new Error(res.status);
+          fbForm.reset();
+          fbStatus.textContent = t("fb.ok");
+          fbStatus.classList.add("ok");
+        })
+        .catch(function () {
+          fbStatus.textContent = t("form.err");
+          fbStatus.classList.add("err");
+        })
+        .then(function () {
+          btn.disabled = false;
+          btn.textContent = t("fb.submit");
         });
     });
   }

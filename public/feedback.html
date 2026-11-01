@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Feedback — IFix8</title>
+  <meta name="description" content="Tell us how your IFix8 phone repair went.">
+  <meta name="theme-color" content="#ffffff">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=9">
+</head>
+<body>
+
+  <header class="nav" id="top">
+    <div class="nav-inner">
+      <a href="index.html" class="brand" aria-label="IFix8 home">
+        <img src="favicon.svg" alt="" width="26" height="26">
+        <span>IFix8</span>
+      </a>
+      <nav class="nav-links" aria-label="Main">
+        <a href="index.html#services" data-i18n="nav.services">Services</a>
+        <a href="index.html#how" data-i18n="nav.how">How it works</a>
+        <a href="index.html#faq" data-i18n="nav.faq">FAQ</a>
+        <a href="index.html#visit" data-i18n="nav.contact">Contact</a>
+        <a href="feedback.html" aria-current="page" data-i18n="nav.feedback">Feedback</a>
+      </nav>
+      <div class="nav-actions">
+        <div class="lang" role="group" aria-label="Language">
+          <button type="button" data-lang="en" aria-pressed="true">EN</button>
+          <button type="button" data-lang="tl" aria-pressed="false">TL</button>
+        </div>
+        <a href="index.html#book" class="btn btn-sm" data-i18n="nav.book">Book</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container narrow">
+        <header class="section-head center reveal">
+          <p class="eyebrow" data-i18n="fb.eyebrow">Feedback</p>
+          <h2 data-i18n="fb.title">How did we do?</h2>
+          <p class="sub" data-i18n="fb.sub">Tell us about your repair. Your feedback helps us improve.</p>
+        </header>
+
+        <form class="form reveal" name="feedback" method="POST" data-netlify="true" netlify-honeypot="bot-field" id="feedback-form">
+          <input type="hidden" name="form-name" value="feedback">
+          <p class="hidden"><label>Don’t fill this out: <input name="bot-field"></label></p>
+
+          <fieldset class="field field-full rating">
+            <legend data-i18n="fb.rating">Your rating</legend>
+            <div class="stars">
+              <input type="radio" id="star-5" name="rating" value="5" required>
+              <label for="star-5" aria-label="5 stars"><svg viewBox="0 0 24 24"><path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9z"/></svg></label>
+              <input type="radio" id="star-4" name="rating" value="4">
+              <label for="star-4" aria-label="4 stars"><svg viewBox="0 0 24 24"><path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9z"/></svg></label>
+              <input type="radio" id="star-3" name="rating" value="3">
+              <label for="star-3" aria-label="3 stars"><svg viewBox="0 0 24 24"><path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9z"/></svg></label>
+              <input type="radio" id="star-2" name="rating" value="2">
+              <label for="star-2" aria-label="2 stars"><svg viewBox="0 0 24 24"><path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9z"/></svg></label>
+              <input type="radio" id="star-1" name="rating" value="1">
+              <label for="star-1" aria-label="1 star"><svg viewBox="0 0 24 24"><path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9z"/></svg></label>
+            </div>
+          </fieldset>
+          <div class="field field-full">
+            <label for="fb-name" data-i18n="fb.name">Name (optional)</label>
+            <input id="fb-name" name="name" type="text" autocomplete="name">
+          </div>
+          <div class="field field-full">
+            <label for="fb-message" data-i18n="fb.message">Your feedback</label>
+            <textarea id="fb-message" name="message" rows="5" maxlength="2000" required></textarea>
+          </div>
+          <div class="field-full form-actions">
+            <button type="submit" class="btn btn-lg" data-i18n="fb.submit">Send feedback</button>
+            <p class="form-status" id="feedback-status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <a href="index.html" class="brand">
+        <img src="favicon.svg" alt="" width="22" height="22">
+        <span>IFix8</span>
+      </a>
+      <p>© <span id="year">2026</span> IFix8 · Las Piñas City · <a href="feedback.html" data-i18n="nav.feedback">Feedback</a></p>
+    </div>
+  </footer>
+
+  <!-- Mobile sticky call/book bar -->
+  <div class="mobile-bar">
+    <a href="tel:+639071026027" class="btn btn-ghost" data-i18n="hero.call">Call</a>
+    <a href="index.html#book" class="btn" data-i18n="hero.book">Book a repair</a>
+  </div>
+
+  <script src="script.js?v=9"></script>
+</body>
+</html>
