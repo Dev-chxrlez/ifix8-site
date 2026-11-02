@@ -15,6 +15,7 @@
       "nav.contact": "Contact",
       "nav.feedback": "Feedback",
       "nav.book": "Book",
+      "footer.owner": "Owned by Charles Guarino",
 
       "hero.eyebrow": "Phone repair in Las Piñas",
       "hero.title": 'Your phone.<br><span class="gradient-text">Good as new.</span>',
@@ -149,6 +150,7 @@
       "nav.contact": "Kontak",
       "nav.feedback": "Feedback",
       "nav.book": "Mag-book",
+      "footer.owner": "Pag-aari ni Charles Guarino",
 
       "hero.eyebrow": "Phone repair sa Las Piñas",
       "hero.title": 'Ang phone mo.<br><span class="gradient-text">Parang bago ulit.</span>',
